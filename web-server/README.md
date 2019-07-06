@@ -1,6 +1,6 @@
-*** Pre requisits
+** Pre requisits
 * Install nodejs version 4.2.x
 
 
-*** Run server
+** Run server
 * node server.js
