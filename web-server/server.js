@@ -25,15 +25,16 @@ function fileAccess(filepath) {
 	});
 }
 
-function fileReader(filepath) {
+function streamFile(filepath) {
 	return new Promise((resolve, reject) => {
-		fs.readFile(filepath, (error, content) => {
-			if(!error) {
-				resolve(content);
-			} else {
-				reject(error);
-			}
+		let fileStream = fs.createReadStream(filepath);
+
+		fileStream.on('open', () => {
+			resolve(fileStream);
 		});
+		fileStream.on('error', () => {
+			reject(error);
+		})
 	});
 }
 
@@ -43,10 +44,11 @@ function webserver(req, res) {
 	let contenType = mimes[path.extname(filepath)];
 
 	fileAccess(filepath)
-		.then(fileReader)
-		.then(content => {
+		.then(streamFile)
+		.then(fileStream => {
 			res.writeHead(200, {'Content-type': contenType});
-			res.end(content, 'utf-8');
+			//res.end(content, 'utf-8');
+			fileStream.pipe(res);
 		})
 		.catch(error => {
 			res.writeHead(404);
