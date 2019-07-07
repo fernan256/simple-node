@@ -1,5 +1,7 @@
-*** Pre requirements ***
-** Run npm install
+# QR image generator
 
-*** Run ***
-** npm qr "somethins to add to image" "image-name.png"
+## Pre requirements
+* Run npm install
+
+## Run
+* npm qr "somethins to add to image" "image-name.png"
